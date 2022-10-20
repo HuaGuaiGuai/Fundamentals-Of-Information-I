@@ -1,0 +1,181 @@
+%
+% This is a borrowed LaTeX template file for lecture notes for CS267,
+% Applications of Parallel Computing, UCBerkeley EECS Department.
+% Now being used for CMU's 10725 Fall 2012 Optimization course
+% taught by Geoff Gordon and Ryan Tibshirani.  When preparing
+% LaTeX notes for this class, please use this template.
+%
+% To familiarize yourself with this template, the body contains
+% some examples of its use.  Look them over.  Then you can
+% run LaTeX on this file.  After you have LaTeXed this file then
+% you can look over the result either by printing it out with
+% dvips or using xdvi. "pdflatex template.tex" should also work.
+%
+
+\documentclass[UTF8,oneside]{article}
+
+% \usepackage[UTF8,scheme=plain]{ctex}
+\usepackage[AutoFakeBold,AutoFakeSlant,CJKecglue]{xeCJK}  % 载入 xeCJK以支持中文，支持伪粗体，伪斜体 , 去掉CJK 文字与西文字体间的空格
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{graphicx}
+\usepackage{autobreak}
+\usepackage{tikz}
+\usepackage{array}
+\usetikzlibrary{positioning} %为了实现相对位置的设定
+\usepackage{xcolor} %为了实现不同的颜色
+\setCJKmainfont{宋体}                                         % 设置中文中文字体
+\setCJKmonofont{宋体}                                        % 设置中文等宽字体
+% \setCJKsansfont{宋体}
+% \setCJKmainfont{SimSun}[BoldFont=SimHei, ItalicFont=KaiTi]
+\setlength{\oddsidemargin}{0.25 in}
+\setlength{\evensidemargin}{-0.25 in}
+\setlength{\topmargin}{-0.6 in}
+\setlength{\textwidth}{6.5 in}
+\setlength{\textheight}{8.5 in}
+\setlength{\headsep}{0.75 in}
+\setlength{\parindent}{0 in}
+\setlength{\parskip}{0.1 in}
+
+%
+% ADD PACKAGES here:
+%
+
+\usepackage{amsmath,amsfonts,graphicx}
+
+%
+% The following commands set up the lecnum (lecture number)
+% counter and make various numbering schemes work relative
+% to the lecture number.
+%
+\newcounter{lecnum}
+\renewcommand{\thepage}{\thelecnum-\arabic{page}}
+\renewcommand{\thesection}{\thelecnum.\arabic{section}}
+\renewcommand{\theequation}{\thelecnum.\arabic{equation}}
+\renewcommand{\thefigure}{\thelecnum.\arabic{figure}}
+\renewcommand{\thetable}{\thelecnum.\arabic{table}}
+
+%
+% The following macro is used to generate the header.
+%
+\newcommand{\lecture}[4]{
+   \pagestyle{myheadings}
+   \thispagestyle{plain}
+   \newpage
+   \setcounter{lecnum}{#1}
+   \setcounter{page}{1}
+   \noindent
+   \begin{center}
+   \framebox{
+      \vbox{\vspace{2mm}
+    \hbox to 6.28in { {\bf Fundamentals Of Information Science
+	\hfill 2022 Spring} }
+       \vspace{4mm}
+       \hbox to 6.28in { {\Large \hfill   #2  \hfill} }
+       \vspace{2mm}
+       \hbox to 6.28in { {\it 学生: #3 \hfill 时间: #4} }
+      \vspace{2mm}}
+   }
+   \end{center}
+   \markboth{Lecture #1: #2}{Lecture #1: #2}
+
+}
+%
+% Convention for citations is authors' initials followed by the year.
+% For example, to cite a paper by Leighton and Maggs you would type
+% \cite{LM89}, and to cite a paper by Strassen you would type \cite{S69}.
+% (To avoid bibliography problems, for now we redefine the \cite command.)
+% Also commands that create a suitable format for the reference list.
+\renewcommand{\cite}[1]{[#1]}
+\def\beginrefs{\begin{list}%
+        {[\arabic{equation}]}{\usecounter{equation}
+         \setlength{\leftmargin}{2.0truecm}\setlength{\labelsep}{0.4truecm}%
+         \setlength{\labelwidth}{1.6truecm}}}
+\def\endrefs{\end{list}}
+\def\bibentry#1{\item[\hbox{[#1]}]}
+
+%Use this command for a figure; it puts a figure in wherever you want it.
+%usage: \fig{NUMBER}{SPACE-IN-INCHES}{CAPTION}
+\newcommand{\fig}[3]{
+			\vspace{#2}
+			\begin{center}
+			Figure \thelecnum.#1:~#3
+			\end{center}
+	}
+% Use these for theorems, lemmas, proofs, etc.
+\usepackage{amsthm}
+\newtheorem*{Solution}{Solution}
+\newtheorem{theorem}{Theorem}[lecnum]
+\newtheorem{lemma}[theorem]{Lemma}
+
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+% \newenvironment{proof}{{\bf Proof:}}{\hfill\rule{2mm}{2mm}}
+
+% **** IF YOU WANT TO DEFINE ADDITIONAL MACROS FOR YOURSELF, PUT THEM HERE:
+
+\newcommand\E{\mathbb{E}}
+
+\begin{document}
+%FILL IN THE RIGHT INFO.
+%\lecture{**LECTURE-NUMBER**}{**DATE**}{**LECTURER**}{**SCRIBE**}
+\lecture{1}{Homework9}{华园（202000120027）)}{2022.3.23}
+%\footnotetext{These notes are partially based on those of Nigel Mansell.}
+
+% **** YOUR NOTES GO HERE:
+
+% Some general latex examples and examples making use of the
+% macros follow.
+%**** IN GENERAL, BE BRIEF. LONG SCRIBE NOTES, NO MATTER HOW WELL WRITTEN,
+%**** ARE NEVER READ BY ANYBODY.
+
+\section*{Problem 1.} % Don't be this informal in your notes!
+multiplicative one-time pad\\
+We may also define a "multiplication mod p" variation of the one-time pad. This is a cipher $\mathcal{E}=(E, D)$, defined over $(\mathcal{K}, \mathcal{M}, \mathcal{C})$, where $\mathcal{K}:=\mathcal{M}:=\mathcal{C}:=\{1, \ldots, p-1\}$, where $p$ is a prime. Encryption and decryption are defined as follows:
+$$
+E(k, m):=k \cdot m \bmod p \quad D(k, c):=k^{-1} \cdot c \bmod p .
+$$
+Here, $k^{-1}$ denotes the multiplicative inverse of $k$ modulo $p$. Verify the correctness/ property for this cipher and prove that it is perfectly secure.
+\begin{Solution}
+\end{Solution}
+（1）为了验证其正确性，我们仅需要验证D(k,E(k,m))=m,因此我们可以获得
+\begin{align*}
+E(k,m)&=k·m \;mod \;p\\
+D(k,E(k,m))&=k^{-1}·(k·m \;mod\; p)mod \;p\\
+&=m 
+\end{align*}
+因此我们可以验证其正确性。
+(2)为了证明是否绝对安全，我们需要验证每个不同的信息被加密成同一密文的概率相同，由于mod乘除运算的特殊性，以及k的等概率分布，我们只需要证明针对不同的m，有且仅有1个k使得m被加密为c.
+由于k·m mod p=c,则可以表示为$$k·m=c+np,(n>=0)$$之后的讨论我们只针对一位进行讨论，k<p，则我们一定可以获得的是$$0<=n<=m-1$$,由于k<p,则有$$m·p>c+np$$,c+np mod m=k·m mod m=0,那么我们可以证明对于任意一个信息$m_i$都有一个整数$k=\frac{c+np}{m_i}$,使得$m_i$被加密为c,且其余满足条件的k值为$k=\frac{c+(n+dm_i)p}{m_i}$,均不在范围内，因此可以证明k的唯一性，由于k的等概率性，从而我们可以证明这种加密方式是绝对安全的。\\
+经过查阅相关材料，获得乘法逆元又称数论倒数。若  且a,m互质，则x为a的逆元，记为，若a,m不互质，则不存在逆元。当且仅当m为素数时，a有唯一的乘法逆元。在此题目中，P与k互质，且$k^{-1}$为k的逆元，因此我们可以确定，针对任意一个$m_i$均有唯一一个k使得$m_i$被加密为C,因此我们可以获得$$Pr[E(k,m)=c]=constant$$
+从而可以证明该加密方法是绝对安全的。
+\section*{Problem 2.}
+Truncating PRFs\\
+Let $F$ be a PRF whose range is $\mathcal{Y}=\{0,1\}^{n}$. For some $\ell<n$ consider the PRF $F^{\prime}$ with a range $\mathcal{Y}^{\prime}=\{0,1\}^{\ell}$ defined as: $F^{\prime}(k, x)=F(k, x)[0 \ldots \ell]$. That is, we truncate the output of $F(k, x)$ to the first $\ell$ bits. Show that if $F$ is a secure PRF then so is $F^{\prime}$.
+\begin{Solution}
+\end{Solution}
+倘若F是安全的PRF，那么可以获得F(k,x)与f（x）无法区分，也就是说从K中随机选取一个k与从所有函数中随机选取一个函数是无法区分的，针对n位无法区分，则针对其前l位，同样无法进行区分，因此F'也是安全的。
+\section*{Problem 3.}
+Chain encryption\\
+Let $\mathcal{E}=(E, D)$ be a perfectly secure cipher defined over $(\mathcal{K}, \mathcal{M}, \mathcal{C})$ where $\mathcal{K}=\mathcal{M}$. Let $\mathcal{E}^{\prime}=$ $\left(E^{\prime}, D^{\prime}\right)$ be a cipher where encryption is defined as $E^{\prime}\left(\left(k_{1}, k_{2}\right), m\right):=\left(E\left(k_{1}, k_{2}\right), E\left(k_{2}, m\right)\right)$. Show that $\mathcal{E}^{\prime}$ is perfectly secure.
+\begin{Solution}
+\end{Solution}
+根据绝对安全的定义，我们可以假设：$$
+\forall m_{0}, m_{1} \in M\text { and } \forall c \in C
+$$
+由于（E,D）是绝对安全的，因此
+$$Pr[E(k_2,m_0)=c_1]=Pr[E(k_2,m_1)=c_1]$$
+$$Pr[E(k_1,k_2)=c_2]=Pr[E(k_1,k_3)=c_2]$$
+也就是说对于$E[k_1,k_2]和E[k_2,m]$两者均为安全加密，从而两者的分布确定，因此可知：
+$$Pr[E'((k_1,k_2),m_0)=c]=Pr[E'((k_1,k_2),m_1)=c]$$
+从而可以判断$E'((k_1,k_2),m)$是绝对安全的。
+% **** THIS ENDS THE EXAMPLES. DON'T DELETE THE FOLLOWING LINE:
+
+\end{document}
+
+
+
+
+
