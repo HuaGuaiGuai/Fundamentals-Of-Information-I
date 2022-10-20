@@ -1,0 +1,292 @@
+%
+% This is a borrowed LaTeX template file for lecture notes for CS267,
+% Applications of Parallel Computing, UCBerkeley EECS Department.
+% Now being used for CMU's 10725 Fall 2012 Optimization course
+% taught by Geoff Gordon and Ryan Tibshirani.  When preparing
+% LaTeX notes for this class, please use this template.
+%
+% To familiarize yourself with this template, the body contains
+% some examples of its use.  Look them over.  Then you can
+% run LaTeX on this file.  After you have LaTeXed this file then
+% you can look over the result either by printing it out with
+% dvips or using xdvi. "pdflatex template.tex" should also work.
+%
+
+\documentclass[UTF8,oneside]{article}
+
+% \usepackage[UTF8,scheme=plain]{ctex}
+\usepackage[AutoFakeBold,AutoFakeSlant,CJKecglue]{xeCJK}  % 载入 xeCJK以支持中文，支持伪粗体，伪斜体 , 去掉CJK 文字与西文字体间的空格
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{graphicx}
+\usepackage{autobreak}
+\usepackage{tikz}
+\usetikzlibrary{positioning} %为了实现相对位置的设定
+\usepackage{xcolor} %为了实现不同的颜色
+\setCJKmainfont{宋体}                                         % 设置中文中文字体
+\setCJKmonofont{宋体}                                        % 设置中文等宽字体
+% \setCJKsansfont{宋体}
+% \setCJKmainfont{SimSun}[BoldFont=SimHei, ItalicFont=KaiTi]
+\setlength{\oddsidemargin}{0.25 in}
+\setlength{\evensidemargin}{-0.25 in}
+\setlength{\topmargin}{-0.6 in}
+\setlength{\textwidth}{6.5 in}
+\setlength{\textheight}{8.5 in}
+\setlength{\headsep}{0.75 in}
+\setlength{\parindent}{0 in}
+\setlength{\parskip}{0.1 in}
+
+%
+% ADD PACKAGES here:
+%
+
+\usepackage{amsmath,amsfonts,graphicx}
+
+%
+% The following commands set up the lecnum (lecture number)
+% counter and make various numbering schemes work relative
+% to the lecture number.
+%
+\newcounter{lecnum}
+\renewcommand{\thepage}{\thelecnum-\arabic{page}}
+\renewcommand{\thesection}{\thelecnum.\arabic{section}}
+\renewcommand{\theequation}{\thelecnum.\arabic{equation}}
+\renewcommand{\thefigure}{\thelecnum.\arabic{figure}}
+\renewcommand{\thetable}{\thelecnum.\arabic{table}}
+
+%
+% The following macro is used to generate the header.
+%
+\newcommand{\lecture}[4]{
+   \pagestyle{myheadings}
+   \thispagestyle{plain}
+   \newpage
+   \setcounter{lecnum}{#1}
+   \setcounter{page}{1}
+   \noindent
+   \begin{center}
+   \framebox{
+      \vbox{\vspace{2mm}
+    \hbox to 6.28in { {\bf Fundamentals Of Information Science
+	\hfill 2022 Spring} }
+       \vspace{4mm}
+       \hbox to 6.28in { {\Large \hfill Homework3  \hfill} }
+       \vspace{2mm}
+       \hbox to 6.28in { {\it 学生: #3 \hfill 时间: #4} }
+      \vspace{2mm}}
+   }
+   \end{center}
+   \markboth{Lecture #1: #2}{Lecture #1: #2}
+
+}
+%
+% Convention for citations is authors' initials followed by the year.
+% For example, to cite a paper by Leighton and Maggs you would type
+% \cite{LM89}, and to cite a paper by Strassen you would type \cite{S69}.
+% (To avoid bibliography problems, for now we redefine the \cite command.)
+% Also commands that create a suitable format for the reference list.
+\renewcommand{\cite}[1]{[#1]}
+\def\beginrefs{\begin{list}%
+        {[\arabic{equation}]}{\usecounter{equation}
+         \setlength{\leftmargin}{2.0truecm}\setlength{\labelsep}{0.4truecm}%
+         \setlength{\labelwidth}{1.6truecm}}}
+\def\endrefs{\end{list}}
+\def\bibentry#1{\item[\hbox{[#1]}]}
+
+%Use this command for a figure; it puts a figure in wherever you want it.
+%usage: \fig{NUMBER}{SPACE-IN-INCHES}{CAPTION}
+\newcommand{\fig}[3]{
+			\vspace{#2}
+			\begin{center}
+			Figure \thelecnum.#1:~#3
+			\end{center}
+	}
+% Use these for theorems, lemmas, proofs, etc.
+\usepackage{amsthm}
+\newtheorem*{Solution}{Solution}
+\newtheorem{theorem}{Theorem}[lecnum]
+\newtheorem{lemma}[theorem]{Lemma}
+
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+% \newenvironment{proof}{{\bf Proof:}}{\hfill\rule{2mm}{2mm}}
+
+% **** IF YOU WANT TO DEFINE ADDITIONAL MACROS FOR YOURSELF, PUT THEM HERE:
+
+\newcommand\E{\mathbb{E}}
+
+\begin{document}
+%FILL IN THE RIGHT INFO.
+%\lecture{**LECTURE-NUMBER**}{**DATE**}{**LECTURER**}{**SCRIBE**}
+\lecture{1}{信息与比特}{华园（202000120027）)}{2022.3.9}
+%\footnotetext{These notes are partially based on those of Nigel Mansell.}
+
+% **** YOUR NOTES GO HERE:
+
+% Some general latex examples and examples making use of the
+% macros follow.
+%**** IN GENERAL, BE BRIEF. LONG SCRIBE NOTES, NO MATTER HOW WELL WRITTEN,
+%**** ARE NEVER READ BY ANYBODY.
+
+\section*{Problem 1.} % Don't be this informal in your notes!
+Coin flips.A fair coin is flipped until the first head occurs. Let X denote the number of flips required. Find the 
+entropy H(X) in bits.\\
+\begin{Solution}
+Suppose the probability distribution of random variable X is P(X).
+\begin{align*}
+P(X=1) &=\frac{1}{2} \\
+P(X=2) &=(\frac{1}{2})^2   \\
+P(X=3) &=(\frac{1}{2})^3   \\
+P(X=4) &=(\frac{1}{2})^4   \\
+\cdots       \\
+P(X=n) &=(\frac{1}{2})^n   \\
+\end{align*}
+According to the definition of entropy, we can get the following results:
+\end{Solution}
+\begin{align*}
+H(X) &=-\sum_{n=1}^\infty p(x)log_{2}p(x) \\
+&=-\sum_{n=1}^\infty(\frac{1}{2})^nlog_{2}(\frac{1}{2})^n\\
+&=\sum_{n=1}^\infty n(\frac{1}{2})^n\\
+&=\frac{1/2}{(1-1/2)^2}\\
+&=2(bits)
+\end{align*}
+
+\section*{Problem 2.} % Don't be this informal in your notes!
+A die comes up 6 twice as often as it comes up 1.What is the maximum entropy？
+\begin{Solution}
+Suppose the probability distribution of random variable X is P(X).
+\begin{align*}
+P(X=1) &=x \\
+P(X=2) &=\frac{1-3x}{4}   \\
+P(X=3) &=\frac{1-3x}{4}  \\
+P(X=4) &=\frac{1-3x}{4}   \\
+P(X=5) &=\frac{1-3x}{4}  \\
+P(X=6) &=2x  \\
+\end{align*}
+According to the definition of entropy, we can get the following results:
+\end{Solution}
+\begin{align*}
+H(X) &=-\sum_{n=1}^\infty p(x)lnp(x) \\
+&=-(xlnx+2xlnx+(1-3x)ln(\frac{1-3x}{4}))
+\end{align*}
+thus
+\begin{align*}
+\frac{\mathrm{d}H(X)}{\mathrm{d}X} &=-(xlnx+2xlnx+(1-3x)ln(\frac{1-3x}{4}))\\
+&=-(lnx+1+2ln2x+2-3ln(\frac{1-3x}{4})-3)\\
+&=-(lnx+2lnx+2ln2-3ln(1-3x)+3ln4)\\
+&=-(3ln(\frac{x}{1-3x})+4ln4)\\
+\\
+Let \frac{\mathrm{d}H(X)}{\mathrm{d}X}=0:\qquad\qquad&we\; can\; know\;that:\quad x_0=\frac{1}{3+2^{\frac{8}{3}}}\\
+\\
+&when\; x<x_0,\quad\frac{\mathrm{d}H(X)}{\mathrm{d}X}>0\\
+&when\;x>x_0,\quad\frac{\mathrm{d}H(X)}{\mathrm{d}X}<0\\
+\\
+thus\;the&\; maximum\;entropy\;is\;H(x_0)
+\end{align*}
+
+\begin{align*}
+H(X)_{max}=H(x_0)=\frac{1}{3+2^{\frac{8}{3}}}ln(3+2^{\frac{8}{3}})+\frac{2}{3+2^{\frac{8}{3}}}ln\frac{3+2^{\frac{8}{3}}}{2}-\frac{2^{\frac{8}{3}}}{3+2^{\frac{8}{3}}}ln\frac{2^{\frac{2}{3}}}{3+2^{\frac{8}{3}}}
+\end{align*}
+
+
+\section*{Problem 3.}
+AEP and source coding. A discrete memoryless source emits a sequence of statistically
+independent binary digits with probabilities p(1) = 0.005 and p(0) = 0.995. The digits are
+taken 100 at a time and a binary codeword is provided for every sequence of 100 digits
+containing three or fewer 1’s.\\
+\\
+(a) Assuming that all codewords are the same length, find the minimum length required to provide codewords for all sequences with three or fewer 1’s.
+\begin{Solution}
+Assuming that the number of all sequences with three or fewer 1’s is N.
+\begin{align*}
+N&=C_{100}^{1}+ C_{100}^{2}+C_{100}^{3}+C_{100}^{0}\\
+&=100+\frac{(100·99)}{2}+\frac{(100·99·98)}{3·2}+1\\
+&=166751\\
+&={(10\quad1000\quad1011\quad0101\quad1111)}_{B}
+\end{align*}
+\qquad\qquad In summary,the minimum length is 18.
+\end{Solution}
+(b) Calculate the probability of observing a source sequence for which no codeword has been assigned.
+\begin{Solution}
+Assuming that the probability of observing a source sequence for which no codeword has
+been assigned is P.
+\begin{align*}
+P&=1-C_{100}^{0}*(0.995)^{100}-C_{100}^{1}*(0.995)^{99}*0.005-C_{100}^{2}*(0.995)^{98}*(0.005)^{2}-C_{100}^{3}*(0.995)^{97}*(0.005)^{3}\\
+&=1-0.60577-0.304407-0.075719-0.012429\\
+&\approx 0.0017
+\end{align*}
+\end{Solution}
+(c) Use Chebyshev’s inequality (search online if you don’t know Chebyshev’s inequality)
+to bound the probability of observing a source sequence for which no codeword has been
+assigned. Compare this bound with the actual probability computed in part (b).
+\begin{Solution}
+Suppose that the random variable X represents the number of 1 in the sequence
+\begin{align*}
+X\sim {B(100,0.005)},E(X)=0.5,D(X)&=0.4975\\
+P(|X-E(X)|\geq3.5)&\leq\frac{D(X)}{(3.5)^2}\\
+P(|X-E(X)|\geq3.5)&\leq0.04061\\
+\\
+0.0017<0.04061&
+\end{align*}
+From this, we can get that the estimation of Chebyshev inequality is relatively rough, and there is a certain gap with the actual probability value.
+\end{Solution}
+
+\section*{Problem 4.}
+Entropy and pairwise independence. Let X, Y, Z be three binary Bernoulli random variables that are pairwise independent; that is, I(X; Y ) = I(X;Z) = I(Y ;Z) = 0.\\
+(a) Under this constraint, what is the minimum value for H(X, Y, Z)?
+\begin{Solution}
+\end{Solution}
+$$ X=Y=Z=\left\{
+\begin{aligned}
+ & & 1 \quad P= \frac{1}{2}\\
+ & & 0 \quad P= \frac{1}{2}\\
+\end{aligned}
+\right.
+$$
+\begin{center}
+\begin{align*}
+H(X)=H(Y)=H(Z)&=\frac{1}{2}log_2(2)+\frac{1}{2}log_2(2)=1\\
+\\
+H(X,Y,Z)&=H(X)+H(Y|X)+H(Z|Y,X)\\
+&=H(X)+H(Y)+H(Z|Y,X)\\
+\\
+when\;H(Z|Y,X)=0,\;\;&H(X)\; is\; the\; minimum.\\
+H(X)_{min}&=2
+
+\end{align*}
+\end{center}
+(b) Give an example achieving this minimum.
+\begin{Solution}
+\end{Solution}
+Suppose a letter is randomly selected from A, B, C and D, and the probability of each letter is 0.25 ,Now set up the following events:\\
+\begin{center}
+Event X: The extracted letter is A or B, \quad P(X)=0.5.\\
+Event Y: The extracted letter is A or C, \quad P(Y)=0.5.\\
+Event Z: The extracted letter is B or C, \quad P(Z)=0.5.\\
+\end{center}
+We assume that random variables X, Y and Z correspond to event X, event Y and event Z respectively. X = 1 means that event X occurs, X= 0 means that event X does not occur, and so on.
+\begin{center}
+(1).X,Y,Z are three binary Bernoulli(0.5) random variables.\\
+(2).P(X,Y)=P(X)P(Y),P(X,Z)=P(X)P(Z),P(Z,Y)=P(Z)P(Y)\\
+so X,Y,Z are pairwise independent.
+\begin{align*}
+when \;(X=0,Y=0):\;P(Z=1)=0,\;P(Z=0)=1.&\qquad  [P(X=0,Y=0)=\frac{1}{4}]\\
+when \;(X=0,Y=1):\;P(Z=1)=1,\;P(Z=0)=0. &\qquad [P(X=0,Y=1)=\frac{1}{4}]\\
+when \;(X=1,Y=0):\;P(Z=1)=1,\;P(Z=0)=0. &\qquad [P(X=1,Y=0)=\frac{1}{4}]\\
+when \;(X=1,Y=1):\;P(Z=1)=0,\;P(Z=0)=1. &\qquad [P(X=1,Y=1)=\frac{1}{4}]\\
+\\
+H(Z|Y,X)=\frac{1}{4}log_2(1)+\frac{1}{4}log_2(1)+\frac{1}{4}log_2(1)+&\frac{1}{4}log_2(1)=0\\
+\\
+H(X,Y,Z)=H(X)+H(Y)=2.(achieving\; &the\; minimum)
+\end{align*}
+\end{center}
+% **** THIS ENDS THE EXAMPLES. DON'T DELETE THE FOLLOWING LINE:
+
+\end{document}
+
+
+
+
+
