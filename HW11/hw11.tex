@@ -1,0 +1,247 @@
+%
+% This is a borrowed LaTeX template file for lecture notes for CS267,
+% Applications of Parallel Computing, UCBerkeley EECS Department.
+% Now being used for CMU's 10725 Fall 2012 Optimization course
+% taught by Geoff Gordon and Ryan Tibshirani.  When preparing
+% LaTeX notes for this class, please use this template.
+%
+% To familiarize yourself with this template, the body contains
+% some examples of its use.  Look them over.  Then you can
+% run LaTeX on this file.  After you have LaTeXed this file then
+% you can look over the result either by printing it out with
+% dvips or using xdvi. "pdflatex template.tex" should also work.
+%
+
+\documentclass[UTF8,oneside]{article}
+
+% \usepackage[UTF8,scheme=plain]{ctex}
+\usepackage[AutoFakeBold,AutoFakeSlant,CJKecglue]{xeCJK}  % 载入 xeCJK以支持中文，支持伪粗体，伪斜体 , 去掉CJK 文字与西文字体间的空格
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{graphicx}
+\usepackage{autobreak}
+\usepackage{tikz}
+\usepackage{array}
+\usetikzlibrary{positioning} %为了实现相对位置的设定
+\usepackage{xcolor} %为了实现不同的颜色
+\setCJKmainfont{宋体}                                         % 设置中文中文字体
+\setCJKmonofont{宋体}                                        % 设置中文等宽字体
+% \setCJKsansfont{宋体}
+% \setCJKmainfont{SimSun}[BoldFont=SimHei, ItalicFont=KaiTi]
+\setlength{\oddsidemargin}{0.25 in}
+\setlength{\evensidemargin}{-0.25 in}
+\setlength{\topmargin}{-0.6 in}
+\setlength{\textwidth}{6.5 in}
+\setlength{\textheight}{8.5 in}
+\setlength{\headsep}{0.75 in}
+\setlength{\parindent}{0 in}
+\setlength{\parskip}{0.1 in}
+
+%
+% ADD PACKAGES here:
+%
+
+\usepackage{amsmath,amsfonts,graphicx}
+
+%
+% The following commands set up the lecnum (lecture number)
+% counter and make various numbering schemes work relative
+% to the lecture number.
+%
+\newcounter{lecnum}
+\renewcommand{\thepage}{\thelecnum-\arabic{page}}
+\renewcommand{\thesection}{\thelecnum.\arabic{section}}
+\renewcommand{\theequation}{\thelecnum.\arabic{equation}}
+\renewcommand{\thefigure}{\thelecnum.\arabic{figure}}
+\renewcommand{\thetable}{\thelecnum.\arabic{table}}
+
+%
+% The following macro is used to generate the header.
+%
+\newcommand{\lecture}[4]{
+   \pagestyle{myheadings}
+   \thispagestyle{plain}
+   \newpage
+   \setcounter{lecnum}{#1}
+   \setcounter{page}{1}
+   \noindent
+   \begin{center}
+   \framebox{
+      \vbox{\vspace{2mm}
+    \hbox to 6.28in { {\bf Fundamentals Of Information Science
+	\hfill 2022 Spring} }
+       \vspace{4mm}
+       \hbox to 6.28in { {\Large \hfill   #2  \hfill} }
+       \vspace{2mm}
+       \hbox to 6.28in { {\it 学生: #3 \hfill 时间: #4} }
+      \vspace{2mm}}
+   }
+   \end{center}
+   \markboth{Lecture #1: #2}{Lecture #1: #2}
+
+}
+%
+% Convention for citations is authors' initials followed by the year.
+% For example, to cite a paper by Leighton and Maggs you would type
+% \cite{LM89}, and to cite a paper by Strassen you would type \cite{S69}.
+% (To avoid bibliography problems, for now we redefine the \cite command.)
+% Also commands that create a suitable format for the reference list.
+\renewcommand{\cite}[1]{[#1]}
+\def\beginrefs{\begin{list}%
+        {[\arabic{equation}]}{\usecounter{equation}
+         \setlength{\leftmargin}{2.0truecm}\setlength{\labelsep}{0.4truecm}%
+         \setlength{\labelwidth}{1.6truecm}}}
+\def\endrefs{\end{list}}
+\def\bibentry#1{\item[\hbox{[#1]}]}
+
+%Use this command for a figure; it puts a figure in wherever you want it.
+%usage: \fig{NUMBER}{SPACE-IN-INCHES}{CAPTION}
+\newcommand{\fig}[3]{
+			\vspace{#2}
+			\begin{center}
+			Figure \thelecnum.#1:~#3
+			\end{center}
+	}
+% Use these for theorems, lemmas, proofs, etc.
+\usepackage{amsthm}
+\newtheorem*{Solution}{Solution}
+\newtheorem{theorem}{Theorem}[lecnum]
+\newtheorem{lemma}[theorem]{Lemma}
+
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+% \newenvironment{proof}{{\bf Proof:}}{\hfill\rule{2mm}{2mm}}
+
+% **** IF YOU WANT TO DEFINE ADDITIONAL MACROS FOR YOURSELF, PUT THEM HERE:
+
+\newcommand\E{\mathbb{E}}
+
+\begin{document}
+%FILL IN THE RIGHT INFO.
+%\lecture{**LECTURE-NUMBER**}{**DATE**}{**LECTURER**}{**SCRIBE**}
+\lecture{1}{Homework11}{华园（202000120027）)}{2022.5.31}
+%\footnotetext{These notes are partially based on those of Nigel Mansell.}
+
+% **** YOUR NOTES GO HERE:
+
+% Some general latex examples and examples making use of the
+% macros follow.
+%**** IN GENERAL, BE BRIEF. LONG SCRIBE NOTES, NO MATTER HOW WELL WRITTEN,
+%**** ARE NEVER READ BY ANYBODY.
+
+\section*{Problem 1.} % Don't be this informal in your notes!
+设 $X(t)$ 是一个均值为 $a$, 自相关函数为 $R_{x}(\tau)$ 的平稳随机过程, 它通过某线性 系统的输出为 $Y(t)=X(t)+X(t-T)$ ( $T$ 为延迟时间)。\\
+(1) 画出该线性系统的框图;\\
+(2) 求 $Y(t)$ 的自相关函数和功率谱密度;\\
+(3) 求 $Y(t)$ 的平均功率。
+\begin{Solution}
+\end{Solution}
+(1)
+\begin{center}
+  \begin{tikzpicture}
+\draw  [black](-0.5,0.5)--(-0.5,-0.5);
+\draw  [black](-1.8,0.5)--(-0.5,0.5);
+\draw  [black](-1.8,0.5)--(-1.8,-0.5);
+\draw  [black](-1.8,-0.5)--(-0.5,-0.5);
+
+\draw  [black](1,2)--(1,1);
+\draw  [black](1,2)--(2,2);
+\draw  [black](2,2)--(2,1);
+\draw  [black](2,1)--(1,1);
+
+\draw  [black,->](-3,1.5)--node[below=-14pt,fill=white]{$$}(1,1.5);
+\draw  [black,->](-1,1.5)--(-1,0.5);
+\draw  [black](-0.5,0)--(1.5,0);
+\draw  [black,->](1.5,0)--(1.5,1);
+\draw  [black,->](2,1.5)--(4,1.5);
+
+\filldraw [black] (-3,1.5) circle (0pt)--node[fill=white]{X(t)}(-3,1.5);
+\filldraw [black] (4,1.5) circle (0pt)--node[fill=white]{Y(t)}(4,1.5);
+\filldraw [black] (-1.1,0) circle (0pt)--node[fill=white]{延时T}(-1.1,0);
+\filldraw [black] (1.5,1.5) circle (0pt)--node[fill=white]{相加}(1.5,1.5);
+  \end{tikzpicture}
+\end{center}
+
+(2)由于平稳过程X（t）通过线性系统后的输出过程Y（t）也是平稳的,因此可以获得自相关函数：
+\begin{align*}
+R_{Y}(\tau)&=E[Y(t)Y(t+\tau)]\\
+&=E\{[X(t)+X(t-T)][X(t+\tau)+X(t+\tau-T)]\}\\
+&=2R_X(\tau)+R_X(\tau-T)+R_X(\tau+T)
+\end{align*}
+自相关函数与功率谱密度互为傅里叶变换，因此可以获得功率谱密度：
+\begin{align*}
+P_{Y}(\omega)&=2 P_{X}(\omega)+P_{X}(\omega) e^{-j w T}+P_{X}(\omega) e^{j w T} \\
+&=2(1+\cos \omega T) P_{X}(\omega)
+\end{align*}
+（3）针对平稳随机过程，平均功率：
+\begin{align*}
+S&=R_{Y}(0)\\
+&=2R_X(0)+R_X(-T)+R_X(T)\\
+&=2[R_X(0)+R_X(T)]
+\end{align*}
+\section*{Problem 2.}
+某个信息源由四个符号组成, 设每个符号独立出现, 其出现概率分别为 $1 / 4$ 、 1/4、3/16、5/16, 经过信道传输后, 每个符号正确接收的概率为 $1021 / 1024$, 错 为其他符号的条件概率为 $1 / 1024$, 试求该信道的信道容量
+\begin{Solution}
+\end{Solution}
+信道容量C：
+\begin{align*}\
+C&=max(H(Y)-H(Y|X))\\
+&=2-H(\frac{1021}{1024},\frac{1}{1024},\frac{1}{1024},\frac{1}{1024})\\
+&=2-0.3351\\
+&=1.967(b/sym)
+\end{align*}
+从而可以获得信道容量：$$C=1.967(b/sym)$$
+\section*{Problem 3.}
+3. 已知彩色电视图像画面由 $5 \times 10^{5}$ 个像素组成, 设每个像素有 64 种彩色度, 每 种彩色度有 16 个亮度等级。如果所有彩色度和亮度等级的组合机会均等, 并统计独立。\\
+(1) 试计算每秒传送 100 幅画面所需的信道容量!\\
+(2) 如果接收机信噪比为 $30 \mathrm{~dB}$, 为了传送彩色图像所需信道带宽为多少?
+% **** THIS ENDS THE EXAMPLES. DON'T DELETE THE FOLLOWING LINE:
+\begin{Solution}
+\end{Solution}
+（1）由题目可知，每个像素点的信息量为：$$I_i=log_2{\frac{1}{p(x)}}=10bits$$
+因此我们可以获得一幅图像的数据量为：$$I=5 \times 10^{5}\times 10=5 \times 10^{6}bits$$
+则每秒传送100幅画面所需的信道容量为：$$C=100I=5\times 10^{8}bits$$
+（2）当接收机信噪比为30db时，代入公式可求得B：$$B=\frac{C}{log_2(1+\frac{S}{N})}=\frac{5\times 10^{8}}{log_2(1+10^3)}=5.02\times 10^{7}Hz$$
+
+\section*{Problem 4.}
+已知 $\mathrm{AM}$ 信号的表达式为
+$$
+s_{A M}(t)=A\left[1+m \cos \omega_{m} t\right] \cos \omega_{c} t
+$$
+式中: $m$ 为调幅系数, 定义为调制信号的最大振幅 $A_{m}$ 与载波最大振幅 $A$ 的比值。 $\omega_{m}$ 为调制角频率, $\omega_{c}$ 为载波角频率，试写出:\\
+（1）上下边频的振幅与载波振幅的关系;\\
+(2) 边带功率与载波功率的关系;\\
+(3) 如果载波功率为 $1 \mathrm{~kW}$, 计算最大边带功率;\\
+(4) AM 信号的频谱表达式。
+\begin{Solution}
+\end{Solution}
+将AM表达式变形可得$$s_{A M}(t)=\left[A+A_m \cos \omega_{m} t\right] \cos \omega_{c} t=A \cos \omega_{c} t+A_m \cos \omega_{m} t\cos \omega_{c} t$$
+(1)根据变形之后的表达式可得，前一项为载波项，后一项为边带项，从而可以得出上下边频的振幅和载波振幅的比值为：$$\frac{A_m}{A}=m$$
+(2)由变形后的AM公式可以求得功率：$$P_{AM}=P_C+P_S=\frac{A^2}{2}+\frac{A_m^2}{4}$$
+前一项为载波功率，后一项为边带功率，则边带功率和载波功率之比为：$$\frac{P_S}{P_C}=\frac{m^2}{2}$$
+(3)满调幅时，即$\frac{A_m}{A}=m=1$时，边带功率最大，此时最大边带功率为：$$P_{smax}=\frac{1}{2}P_C=500W$$
+(4)经傅里叶变换得：$$
+S_{\mathrm{AM}}(\omega)=\pi A\left[\delta\left(\omega+\omega_{c}\right)+\delta\left(\omega-\omega_{c}\right)\right]+\frac{\pi A_m}{2}\pi A_m[\delta\left(\omega-\omega_{m}+\omega_{c}\right)+\delta\left(\omega+\omega_{m}+\omega_{c}\right)+\delta\left(\omega+\omega_{m}-\omega_{c}\right)+\delta\left(\omega+\omega_{m}-\omega_{c}\right)]$$
+
+\section*{Problem 5.}
+设二进制调制系统的码元速率 $R_{B}=2 \times 10^{6} \mathrm{Baud}$, 信道加性高斯白噪声的单边 功率谱密度 $n_{0}=4 \times 10^{-15} \mathrm{~W} / \mathrm{Hz}$, 接收端解调器输入信号的峰值振幅 $a=800 \mu \mathrm{V}$, 试计算和比较:\\
+（1）非相干（包络检波）接收 2ASK、2FSK 信号时, 系统的误码率;\\
+(2) 相干接收 2ASK、2FSK、2PSK 信号时, 系统的误码率。
+\begin{Solution}
+\end{Solution}
+由题可知，该系统为二进制调制系统，因此我们可以获得带宽B：$$B=2\times R_B=4\times10^6HZ$$
+从而可以获得噪声的方差：$$\sigma_n^2=n_0\times B=1.6\times 10^{-8}$$
+进而可以获得信噪比r：$$r=\frac{a^2}{2\sigma_n^2}=20$$
+(1)在非相干接受时，针对2ASK:$$P_e\approx\frac{1}{2} e^{-5}=3.369\times 10^{-3}$$
+针对2FSK系统，可以获得误码率：$$P_e\approx\frac{1}{2}e^{-10}=2.270\times 10^{-5}$$
+(2）在相干接受时，针对2ASK系统，误码率为：$$P_e\approx\frac{1}{\sqrt{\pi\times 20}}e^{-5}=8.5\times 10^{-4}$$
+针对2FSK系统，误码率为：$$P_e\approx\frac{1}{\sqrt{2\pi\times 20}}e^{-10}=4.05\times 10^{-6}$$
+针对2PSK系统，误码率为：$$P_e\approx\frac{1}{2\sqrt{\pi\times 20}}e^{-20}=8.169\times10^{-9}$$
+\end{document}
+
+
+
+
+
