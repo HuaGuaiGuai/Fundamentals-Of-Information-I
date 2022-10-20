@@ -1,0 +1,270 @@
+%
+% This is a borrowed LaTeX template file for lecture notes for CS267,
+% Applications of Parallel Computing, UCBerkeley EECS Department.
+% Now being used for CMU's 10725 Fall 2012 Optimization course
+% taught by Geoff Gordon and Ryan Tibshirani.  When preparing
+% LaTeX notes for this class, please use this template.
+%
+% To familiarize yourself with this template, the body contains
+% some examples of its use.  Look them over.  Then you can
+% run LaTeX on this file.  After you have LaTeXed this file then
+% you can look over the result either by printing it out with
+% dvips or using xdvi. "pdflatex template.tex" should also work.
+%
+
+\documentclass[UTF8,oneside]{article}
+
+% \usepackage[UTF8,scheme=plain]{ctex}
+\usepackage[AutoFakeBold,AutoFakeSlant,CJKecglue]{xeCJK}  % 载入 xeCJK以支持中文，支持伪粗体，伪斜体 , 去掉CJK 文字与西文字体间的空格
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{graphicx}
+\usepackage{autobreak}
+\usepackage{tikz}
+\usetikzlibrary{positioning} %为了实现相对位置的设定
+\usepackage{xcolor} %为了实现不同的颜色
+\setCJKmainfont{宋体}                                         % 设置中文中文字体
+\setCJKmonofont{宋体}                                        % 设置中文等宽字体
+% \setCJKsansfont{宋体}
+% \setCJKmainfont{SimSun}[BoldFont=SimHei, ItalicFont=KaiTi]
+\setlength{\oddsidemargin}{0.25 in}
+\setlength{\evensidemargin}{-0.25 in}
+\setlength{\topmargin}{-0.6 in}
+\setlength{\textwidth}{6.5 in}
+\setlength{\textheight}{8.5 in}
+\setlength{\headsep}{0.75 in}
+\setlength{\parindent}{0 in}
+\setlength{\parskip}{0.1 in}
+
+%
+% ADD PACKAGES here:
+%
+
+\usepackage{amsmath,amsfonts,graphicx}
+
+%
+% The following commands set up the lecnum (lecture number)
+% counter and make various numbering schemes work relative
+% to the lecture number.
+%
+\newcounter{lecnum}
+\renewcommand{\thepage}{\thelecnum-\arabic{page}}
+\renewcommand{\thesection}{\thelecnum.\arabic{section}}
+\renewcommand{\theequation}{\thelecnum.\arabic{equation}}
+\renewcommand{\thefigure}{\thelecnum.\arabic{figure}}
+\renewcommand{\thetable}{\thelecnum.\arabic{table}}
+
+%
+% The following macro is used to generate the header.
+%
+\newcommand{\lecture}[4]{
+   \pagestyle{myheadings}
+   \thispagestyle{plain}
+   \newpage
+   \setcounter{lecnum}{#1}
+   \setcounter{page}{1}
+   \noindent
+   \begin{center}
+   \framebox{
+      \vbox{\vspace{2mm}
+    \hbox to 6.28in { {\bf Fundamentals Of Information Science
+	\hfill 2022 Spring} }
+       \vspace{4mm}
+       \hbox to 6.28in { {\Large \hfill HW #1: #2  \hfill} }
+       \vspace{2mm}
+       \hbox to 6.28in { {\it 学生: #3 \hfill 时间: #4} }
+      \vspace{2mm}}
+   }
+   \end{center}
+   \markboth{Lecture #1: #2}{Lecture #1: #2}
+
+}
+%
+% Convention for citations is authors' initials followed by the year.
+% For example, to cite a paper by Leighton and Maggs you would type
+% \cite{LM89}, and to cite a paper by Strassen you would type \cite{S69}.
+% (To avoid bibliography problems, for now we redefine the \cite command.)
+% Also commands that create a suitable format for the reference list.
+\renewcommand{\cite}[1]{[#1]}
+\def\beginrefs{\begin{list}%
+        {[\arabic{equation}]}{\usecounter{equation}
+         \setlength{\leftmargin}{2.0truecm}\setlength{\labelsep}{0.4truecm}%
+         \setlength{\labelwidth}{1.6truecm}}}
+\def\endrefs{\end{list}}
+\def\bibentry#1{\item[\hbox{[#1]}]}
+
+%Use this command for a figure; it puts a figure in wherever you want it.
+%usage: \fig{NUMBER}{SPACE-IN-INCHES}{CAPTION}
+\newcommand{\fig}[3]{
+			\vspace{#2}
+			\begin{center}
+			Figure \thelecnum.#1:~#3
+			\end{center}
+	}
+% Use these for theorems, lemmas, proofs, etc.
+\usepackage{amsthm}
+\newtheorem*{Solution}{Solution}
+\newtheorem{theorem}{Theorem}[lecnum]
+\newtheorem{lemma}[theorem]{Lemma}
+
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+% \newenvironment{proof}{{\bf Proof:}}{\hfill\rule{2mm}{2mm}}
+
+% **** IF YOU WANT TO DEFINE ADDITIONAL MACROS FOR YOURSELF, PUT THEM HERE:
+
+\newcommand\E{\mathbb{E}}
+
+\begin{document}
+%FILL IN THE RIGHT INFO.
+%\lecture{**LECTURE-NUMBER**}{**DATE**}{**LECTURER**}{**SCRIBE**}
+\lecture{1}{信息与比特}{华园（202000120027）)}{2022.2.24}
+%\footnotetext{These notes are partially based on those of Nigel Mansell.}
+
+% **** YOUR NOTES GO HERE:
+
+% Some general latex examples and examples making use of the
+% macros follow.
+%**** IN GENERAL, BE BRIEF. LONG SCRIBE NOTES, NO MATTER HOW WELL WRITTEN,
+%**** ARE NEVER READ BY ANYBODY.
+
+\section*{Problem 1.} % Don't be this informal in your notes!
+Proof the following atatements are true for a 0-1 Boolean algebra.
+\begin{Solution}
+\begin{align*}
+
+ (1)\quad a·(a+(b·c)) &= a·a+a·(b·c) \\
+
+&= a+a·(b·c) \\
+
+&= a(1+b·c) \\
+
+&=a 
+\end{align*}
+
+\begin{align*}
+(2)\quad (a·b)+(\overline{a}+\overline{b}) &=(a·b)+\overline{(a·b)} \\
+&=1
+\end{align*}
+\end{Solution}
+
+
+
+
+\section*{Problem 2.}
+Coin flips.A fair coin is flipped until the first head occurs. Let X denote the number of flips required. Find the 
+entropy H(X) in bits.\\
+\begin{Solution}
+Suppose the probability distribution of random variable X is P(X).
+\begin{align*}
+P(X=1) &=\frac{1}{2} \\
+P(X=2) &=(\frac{1}{2})^2   \\
+P(X=3) &=(\frac{1}{2})^3   \\
+P(X=4) &=(\frac{1}{2})^4   \\
+\cdots       \\
+P(X=n) &=(\frac{1}{2})^n   \\
+\end{align*}
+According to the definition of entropy, we can get the following results:
+\end{Solution}
+\begin{align*}
+H(X) &=-\sum_{n=1}^\infty p(x)log_{2}p(x) \\
+&=-\sum_{n=1}^\infty(\frac{1}{2})^nlog_{2}(\frac{1}{2})^n\\
+&=\sum_{n=1}^\infty n(\frac{1}{2})^n\\
+&=\frac{1/2}{(1-1/2)^2}\\
+&=2(bits)
+\end{align*}
+\section*{Problem 3.}
+\begin{Solution}
+\begin{align*}
+m(a,b)=\overline{a}+\overline{b}=\overline{ab}\quad&\quad
+P(a,b)=\overline{a}b+a\overline{b}\\
+m(a,a)=\overline{a}\qquad m(\overline{a},b)&=\overline{(\overline{a}b)}\qquad
+m(a,\overline{b})=\overline{(a\overline{b})}\\
+m(\overline{(\overline{a}b)},\overline{(a\overline{b})})&=\overline{a}b+a\overline{b}=P(a,b)
+\end{align*}
+\end{Solution}
+% **** THIS ENDS THE EXAMPLES. DON'T DELETE THE FOLLOWING LINE:
+\begin{center}
+  \begin{tikzpicture}
+\draw  [black](1,0)--(5,0);
+\draw  [black](1,0)--(1,2);
+\draw  [black](1,2)--(5,2);
+\draw  [black](5,2)--(5,0);
+
+\draw  [black](1,3)--(5,3);
+\draw  [black](5,3)--(5,5);
+\draw  [black](5,5)--(1,5);
+\draw  [black](1,3)--(1,5);
+
+\draw  [black](-1,0)--(-5,0);
+\draw  [black](-1,0)--(-1,2);
+\draw  [black](-1,2)--(-5,2);
+\draw  [black](-5,2)--(-5,0);
+
+\draw  [black](-1,3)--(-5,3);
+\draw  [black](-5,3)--(-5,5);
+\draw  [black](-5,5)--(-1,5);
+\draw  [black](-1,3)--(-1,5);
+
+\draw  [black](3,3)--(3,2.5);
+\draw  [black](3,2.5)--(4,2.5);
+\draw  [black](2,2.5)--(0.5,2.5);
+\draw  [black](0.5,2.5)--(0.5,5.75);
+\draw  [black](0.5,5.75)--(-2,5.75);
+\draw  [black,->](2,2.5)--(2,2);
+\draw  [black,->](4,2.5)--(4,2);
+
+\draw  [black](-3,3)--(-3,2.5);
+\draw  [black](-3,2.5)--(-4,2.5);
+\draw  [black](-2,2.5)--(-0.5,2.5);
+\draw  [black](-0.5,2.5)--(-0.5,5.5);
+\draw  [black](-0.5,5.5)--(2,5.5);
+\draw  [black,->](-2,2.5)--(-2,2);
+\draw  [black,->](-4,2.5)--(-4,2);
+
+\draw  [black](3,6)--(3,5.5);
+\draw  [black](3,5.5)--(2,5.5);
+\draw  [black](3,5.5)--(4,5.5);
+\draw  [black,->](2,5.5)--(2,5);
+\draw  [black,->](4,5.5)--(4,5);
+
+\draw  [black](-3,6)--(-3,5.75);
+\draw  [black](-3,5.75)--(-2,5.75);
+\draw  [black](-3,5.75)--(-4,5.75);
+\draw  [black,->](-2,5.75)--(-2,5);
+\draw  [black,->](-4,5.75)--(-4,5);
+
+
+\draw  [black](-2,-1)--(2,-1);
+\draw  [black](-2,-3)--(2,-3);
+\draw  [black](-2,-1)--(-2,-3);
+\draw  [black](2,-1)--(2,-3);
+
+\draw  [black](3,0)--(3,-0.5);
+\draw  [black](-3,0)--(-3,-0.5);
+\draw  [black](-3,-0.5)--(-1,-0.5);
+\draw  [black,](3,-0.5)--(1,-0.5);
+\draw  [black,->](1,-0.5)--(1,-1);
+\draw  [black,->](-1,-0.5)--(-1,-1);
+
+\draw  [black,->](0,-3)--(0,-3.5);
+\put(75,25){\small\bfseries\color{blue}{$m(a,b)$}}
+\put(75,110){\small\bfseries\color{blue}{$m(a,b)$}}
+\put(85,175){\small\bfseries\color{blue}{$b$}}
+    
+\put(-95,25){\small\bfseries\color{blue}{$m(a,b)$}}
+\put(-95,110){\small\bfseries\color{blue}{$m(a,b)$}}
+\put(-87,175){\small\bfseries\color{blue}{$a$}}
+
+\put(-15,-60){\small\bfseries\color{blue}{$m(a,b)$}}
+\put(-15,-110){\small\bfseries\color{blue}{$P(a,b)$}}
+  \end{tikzpicture}
+\end{center}
+\end{document}
+
+
+
+
+
