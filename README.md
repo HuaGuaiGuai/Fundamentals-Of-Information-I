@@ -3,4 +3,5 @@
 1.The problem1 of hw4 is wrong.  
 2.The final score for this assignment is full marks, and the reader can refer to it as a reference  
 3.There is a floating point overflow problem in LDPC,If you don't know how to program,Click on the following link:  
-https://www.bilibili.com/video/BV18r4y1q7fj?share_source=copy_web
+https://www.bilibili.com/video/BV18r4y1q7fj?share_source=copy_web  
+4.No one really understood what Mr. Zhou was thinking, including the TA
